@@ -1,110 +1,233 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SAG Enterprises - Financial Consultation Firm</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f7f9fc; color: #333; }
-    header { background: #002e5b; color: #fff; padding: 20px; text-align: center; }
-    nav { background: #004080; padding: 10px; text-align: center; }
-    nav a { color: #fff; margin: 0 15px; text-decoration: none; font-weight: bold; }
-    section { padding: 40px 20px; max-width: 1000px; margin: auto; }
-    h2 { color: #002e5b; }
-    .services li { margin: 10px 0; }
-    footer { background: #002e5b; color: #fff; text-align: center; padding: 20px; }
-    .contact-box { background: #e6f0ff; padding: 20px; border-radius: 8px; }
-    a { color: #002e5b; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: #f2f4f8;
+      color: #333;
+      line-height: 1.6;
+    }
+    header {
+      background: linear-gradient(to right, #002e5b, #005aa7);
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    nav {
+      background: #001f3f;
+      text-align: center;
+      padding: 0.8rem;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #00bfff;
+    }
+    section {
+      padding: 3rem 1rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+    h2 {
+      font-size: 2rem;
+      color: #002e5b;
+      margin-bottom: 1.2rem;
+      text-align: center;
+    }
+    ul, ol {
+      padding-left: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    li {
+      margin-bottom: 0.5rem;
+    }
+    .services-box, .contact-box, .education-box {
+      background: #fff;
+      padding: 2rem;
+      margin-top: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.08);
+    }
+    footer {
+      background: #002e5b;
+      color: #fff;
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.95rem;
+    }
+    a {
+      color: #005aa7;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #e6f0ff;
+    }
   </style>
 </head>
 <body>
+
   <header>
     <h1>SAG Enterprises</h1>
     <p>Your Trusted Financial Consultation Partner</p>
-  </header>  <nav>
+  </header>
+
+  <nav>
     <a href="#about">About</a>
-    <a href="#services">Services</a>
+    <a href="#core-services">Services</a>
+    <a href="#education">Home Loan Info</a>
     <a href="#contact">Contact</a>
-  </nav>  <section id="about">
+  </nav>
+
+  <section id="about">
     <h2>About Us</h2>
-    <p>
-      At SAG Enterprises, we specialize in delivering expert financial consultation services.
-      We are dedicated to helping individuals and businesses stay compliant, financially sound,
-      and prepared for future growth.
-    </p>
-  </section>  <section id="services">
-    <h2>Our Services</h2>
-    <ul class="services">
-      <!-- Services Section Start -->
-<section id="services" style="background:#f9f9f9; padding: 50px 20px;">
-  <div style="max-width: 1000px; margin: auto; background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 0 12px rgba(0,0,0,0.1);">
-    <h2 style="text-align:center; font-size: 28px; color: #2c3e50; margin-bottom: 40px;">✅ Core Services of <span style="color:#2980b9;">SAG Enterprises</span></h2>
+    <div class="services-box">
+      <p>
+        At SAG Enterprises, we provide expert financial consultation services. Our focus is on
+        helping individuals and businesses with compliance, strategic planning, and achieving
+        financial clarity.
+      </p>
+    </div>
+  </section>
 
-    <h3>📘 Accounting & Bookkeeping</h3>
-    <ul>
-      <li>Maintenance of books of accounts (manual or software like Tally, Zoho, QuickBooks)</li>
-      <li>Preparation of financial statements (P&amp;L, Balance Sheet)</li>
-      <li>Reconciliation (bank, vendor, debtor, etc.)</li>
-    </ul>
+  <section id="core-services">
+    <h2>✅ Core Services of SAG Enterprises</h2>
+    <div class="services-box">
+      <h3>📘 Accounting & Bookkeeping</h3>
+      <ul>
+        <li>Maintenance using Tally, Zoho, QuickBooks</li>
+        <li>Financial Statements (P&L, Balance Sheet)</li>
+        <li>Bank & Vendor Reconciliation</li>
+      </ul>
 
-    <h3>🧾 Taxation Services</h3>
-    <ul>
-      <li>Income Tax Filing for individuals, firms, companies</li>
-      <li>Advance tax &amp; tax planning</li>
-      <li>Representation before Income Tax authorities</li>
-      <li>Capital gain computation</li>
-      <li>TDS/TCS compliance (return filing, challans, certificates)</li>
-    </ul>
+      <h3>🧾 Taxation Services</h3>
+      <ul>
+        <li>Income Tax Returns, Advance Tax Planning</li>
+        <li>TDS/TCS Compliance</li>
+        <li>Capital Gain Computation</li>
+      </ul>
 
-    <h3>📦 GST Services</h3>
-    <ul>
-      <li>GST registration</li>
-      <li>Monthly/Quarterly return filing (GSTR-1, 3B, etc.)</li>
-      <li>Reconciliation &amp; matching (GSTR-2A/2B)</li>
-      <li>LUT filing for exporters</li>
-      <li>GST audit support</li>
-    </ul>
+      <h3>📦 GST Services</h3>
+      <ul>
+        <li>Registration & Returns (GSTR-1, 3B)</li>
+        <li>Reconciliation & LUT Filing</li>
+        <li>Audit Assistance</li>
+      </ul>
 
-    <h3>💼 Business Registration & Legal Compliances</h3>
-    <ul>
-      <li>Proprietorship, Partnership, LLP, or Private Limited company setup</li>
-      <li>PAN, TAN, MSME/Udyam registration</li>
-      <li>Shops &amp; Establishment License</li>
-      <li>Trade License</li>
-      <li>ROC Filings (for companies/LLPs)</li>
-    </ul>
+      <h3>💼 Business Setup & Compliance</h3>
+      <ul>
+        <li>Company/LLP Registration</li>
+        <li>ROC Filing, PAN/TAN, MSME</li>
+        <li>Licensing & Trade Documentation</li>
+      </ul>
 
-    <h3>📊 Financial Planning & Advisory</h3>
-    <ul>
-      <li>Budgeting and forecasting</li>
-      <li>Profit planning and cost control</li>
-      <li>Business finance strategy</li>
-      <li>Investment planning (FDs, mutual funds, etc.)</li>
-      <li>Loan advisory (home loan, business loan, etc.)</li>
-    </ul>
+      <h3>📊 Financial Planning & Advisory</h3>
+      <ul>
+        <li>Budgeting, Forecasting, Investment Guidance</li>
+        <li>Home & Business Loan Support</li>
+      </ul>
 
-    <h3>👨‍💻 Payroll & Labour Law Compliance</h3>
-    <ul>
-      <li>Salary processing</li>
-      <li>ESIC &amp; EPF registration and return filing</li>
-      <li>Professional Tax (PT) compliance</li>
-      <li>Gratuity and bonus calculation</li>
-    </ul>
+      <h3>👨‍💻 Payroll & Labour Compliance</h3>
+      <ul>
+        <li>Salary Processing, EPF/ESIC Returns</li>
+        <li>Gratuity, Bonus, PT Compliance</li>
+      </ul>
 
-    <hr style="margin: 40px 0; border: 1px solid #eee;">
+      <h3>🌐 Other Value Services</h3>
+      <ul>
+        <li>Virtual CFO, Digital Signatures</li>
+        <li>Import Export Code (IEC)</li>
+        <li>Loan Project Reports & CMA Data</li>
+      </ul>
+    </div>
+  </section>
 
-    <h3>🌐 Other Value-Added Services</h3>
-    <ul>
-      <li>Virtual CFO services</li>
-      <li>Digital signature (DSC) services</li>
-      <li>Import Export Code (IEC)</li>
-      <li>Project reports for loan application</li>
-      <li>Business valuation support</li>
-      <li>Financial Due Diligence</li>
-    </ul>
-  </div>
-</section>
-    </ul>
-  </section>  <section id="contact">
+  <section id="education">
+    <h2>🏡 Home Loan Guide (Client Education Corner)</h2>
+    <div class="education-box">
+      <h3>1. What is a Home Loan?</h3>
+      <p>A secured loan used to purchase, construct or renovate a house.</p>
+      <ul>
+        <li>Buy Flat/House</li>
+        <li>Renovation or Construction</li>
+        <li>Purchase Plot with/without construction</li>
+      </ul>
+
+      <h3>2. Eligibility Criteria</h3>
+      <table>
+        <tr><th>Criteria</th><th>Salaried</th><th>Self-employed</th></tr>
+        <tr><td>Age</td><td>21-60</td><td>21-65</td></tr>
+        <tr><td>Income</td><td>₹25,000+</td><td>3yr ITRs</td></tr>
+        <tr><td>Credit Score</td><td colspan="2">700+ recommended</td></tr>
+        <tr><td>LTV</td><td colspan="2">75%-90% of value</td></tr>
+      </table>
+
+      <h3>3. Documents Required</h3>
+      <ul>
+        <li>PAN, Aadhaar, Salary Slips / ITRs</li>
+        <li>Bank Statement, Property Papers</li>
+        <li>Title Deed, Sale Agreement, NOC</li>
+      </ul>
+
+      <h3>4. Types of Loans</h3>
+      <ul>
+        <li>Home Purchase / Top-up Loan</li>
+        <li>Construction / Improvement Loan</li>
+        <li>Plot + Construction</li>
+      </ul>
+
+      <h3>5. EMI & Charges</h3>
+      <p>Rates between 8.35%–10.5%, tenure up to 30 years.</p>
+      <ul>
+        <li>Processing: 0.25–1%</li>
+        <li>Legal/Valuation: ₹5K–₹10K</li>
+        <li>Prepayment: Free (floating)</li>
+      </ul>
+
+      <h3>6. Banks Offering (2025)</h3>
+      <ul>
+        <li>SBI, LIC, HDFC, ICICI, PNB Housing</li>
+      </ul>
+
+      <h3>7. Our Assistance Includes</h3>
+      <ul>
+        <li>CMA Data, Form Filling</li>
+        <li>Project Reports</li>
+        <li>Comparison & Application Help</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact">
     <h2>Contact Us</h2>
     <div class="contact-box">
       <p><strong>📞 Phone:</strong> <a href="tel:7980857943">7980857943</a></p>
@@ -112,123 +235,11 @@
       <p><strong>📍 Address:</strong> G-357, Alif Nagar, Garden Reach</p>
       <p><strong>💬 WhatsApp:</strong> <a href="https://wa.me/917980857943" target="_blank">Chat on WhatsApp</a></p>
     </div>
-  </section>  <footer>
+  </section>
+
+  <footer>
     <p>&copy; 2025 SAG Enterprises. All rights reserved.</p>
   </footer>
+
 </body>
 </html>
-
-<section id="Client Education Corner" style="padding: 2rem; background-color: #f9f9f9; font-family: Arial, sans-serif;">
-  <h2 style="text-align: center; font-size: 2rem; margin-bottom: 1rem;">Our Services</h2>
-  
-  <div style="max-width: 900px; margin: auto;">
-    <h3>🏡 1. What Is a Home Loan?</h3>
-    <p>A home loan is a secured loan provided by banks/NBFCs to help you:</p>
-    <ul>
-      <li>Buy a new or resale flat/house</li>
-      <li>Construct a house</li>
-      <li>Renovate your existing home</li>
-      <li>Buy a plot (with/without construction)</li>
-    </ul>
-
-    <h3>✅ 2. Home Loan Eligibility Criteria</h3>
-    <table style="width: 100%; border-collapse: collapse;">
-      <tr><th style="border: 1px solid #ddd; padding: 8px;">Criteria</th><th style="border: 1px solid #ddd; padding: 8px;">Salaried</th><th style="border: 1px solid #ddd; padding: 8px;">Self-employed</th></tr>
-      <tr><td style="border: 1px solid #ddd; padding: 8px;">Age</td><td>21 to 60 years</td><td>21 to 65 years</td></tr>
-      <tr><td style="border: 1px solid #ddd; padding: 8px;">Employment Type</td><td>Govt/Private Employees</td><td>Professionals, Business Owners</td></tr>
-      <tr><td style="border: 1px solid #ddd; padding: 8px;">Minimum Monthly Income</td><td>₹25,000–₹30,000</td><td>ITRs showing sufficient income</td></tr>
-      <tr><td style="border: 1px solid #ddd; padding: 8px;">Work Experience</td><td>2–3 years</td><td>3 years in business</td></tr>
-      <tr><td style="border: 1px solid #ddd; padding: 8px;">Credit Score</td><td colspan="2">700+ (recommended)</td></tr>
-      <tr><td style="border: 1px solid #ddd; padding: 8px;">Loan Amount</td><td colspan="2">75% to 90% of property value</td></tr>
-    </table>
-
-    <h3>📂 3. Required Documents</h3>
-    <h4>For Salaried:</h4>
-    <ul>
-      <li>PAN & Aadhaar</li>
-      <li>3–6 Months Salary Slips</li>
-      <li>2–3 Years Form 16</li>
-      <li>6 Months Bank Statements</li>
-      <li>Employment Letter, Address Proof</li>
-    </ul>
-    <h4>For Self-employed:</h4>
-    <ul>
-      <li>PAN & Aadhaar</li>
-      <li>GST/Trade License</li>
-      <li>3 Years ITR & Computation</li>
-      <li>CA Certified Balance Sheet</li>
-      <li>Bank Statements, Business Proof</li>
-    </ul>
-    <h4>For Property:</h4>
-    <ul>
-      <li>Sale Agreement</li>
-      <li>Title Deed & Plan Approval</li>
-      <li>NOC if required</li>
-    </ul>
-
-    <h3>📋 4. Types of Home Loans</h3>
-    <ul>
-      <li>Home Purchase Loan</li>
-      <li>Plot + Construction Loan</li>
-      <li>Construction Loan</li>
-      <li>Home Improvement Loan</li>
-      <li>Balance Transfer</li>
-      <li>Top-Up Loan</li>
-    </ul>
-
-    <h3>💰 5. Loan Amount & LTV Ratio</h3>
-    <ul>
-      <li>Up to ₹30 lakh: 90%</li>
-      <li>₹30–75 lakh: 80%</li>
-      <li>Above ₹75 lakh: 75%</li>
-    </ul>
-
-    <h3>🧲 6. EMI Calculation</h3>
-    <p>EMI depends on loan amount, tenure (up to 30 years), and interest rate (8.35% to 10.5%).</p>
-
-    <h3>🏦 7. Home Loan Process</h3>
-    <ol>
-      <li>Check Eligibility & CIBIL</li>
-      <li>Choose Bank (SBI, HDFC, ICICI, etc.)</li>
-      <li>Apply & Submit Documents</li>
-      <li>Verification by Bank</li>
-      <li>Receive Sanction Letter</li>
-      <li>Property Legal & Valuation Check</li>
-      <li>Loan Agreement & Disbursement</li>
-    </ol>
-
-    <h3>🧠 8. Tips for Easy Approval</h3>
-    <ul>
-      <li>Maintain 750+ CIBIL</li>
-      <li>Clear debts & credit card dues</li>
-      <li>Add co-applicant if needed</li>
-      <li>Ensure complete & clean documents</li>
-    </ul>
-
-    <h3>📉 9. Common Charges</h3>
-    <ul>
-      <li>Processing Fee: 0.25% to 1%</li>
-      <li>Legal/Valuation: ₹5,000–₹10,000</li>
-      <li>Prepayment: NIL for floating</li>
-      <li>EMI Bounce: ₹500–750</li>
-    </ul>
-
-    <h3>📅 10. Top Banks (2025)</h3>
-    <ul>
-      <li>SBI: 8.35% - No hidden charges</li>
-      <li>LIC HFL: 8.45% - Long tenure</li>
-      <li>HDFC: 8.50% - Quick process</li>
-      <li>ICICI: 8.55% - Digital process</li>
-      <li>PNB Housing: 8.75% - Flexible terms</li>
-    </ul>
-
-    <h3>📄 Need Help?</h3>
-    <p>We assist in:</p>
-    <ul>
-      <li>CMA Data for Self-employed</li>
-      <li>Project Reports</li>
-      <li>Bank Offer Comparison</li>
-      <li>Online Form Fillings</li>
-    </ul>
-  </div>
-</section>
