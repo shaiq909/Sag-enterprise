@@ -23,7 +23,31 @@
       text-align: center;
       padding: 2rem 1rem;
     }
-    nav {
+    nav { <section id="welcome" style="position: relative; height: 80vh; background: linear-gradient(135deg, #002e5b, #004e92); color: #fff; display: flex; align-items: center; justify-content: center; text-align: center;">
+  <div>
+    <h1 style="font-size: 3rem; margin-bottom: 1rem;" class="typing">Welcome to <span style="color:#00d4ff;">SAG Enterprises</span></h1>
+    <p style="font-size: 1.3rem; margin-bottom: 2rem;">Your Trusted Financial Consultation Partner</p>
+    <a href="#core-services" style="padding: 12px 24px; background: #00d4ff; color: #002e5b; border-radius: 30px; font-weight: bold; text-decoration: none; box-shadow: 0 0 10px #00d4ff;">Explore Services</a>
+  </div>
+</section>
+
+<!-- Typing Animation -->
+<script>
+  const text = document.querySelector(".typing");
+  let str = text.textContent;
+  let split = str.split("");
+  text.textContent = "";
+  let char = 0;
+
+  function type() {
+    if (char < split.length) {
+      text.textContent += split[char];
+      char++;
+      setTimeout(type, 100);
+    }
+  }
+  type();
+</script>
       background: #001f3f;
       text-align: center;
       padding: 0.8rem;
