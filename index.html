@@ -7,39 +7,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
     body {
       font-family: 'Rajdhani', sans-serif;
-      background: #f2f4f8;
-      color: #333;
+      background: #000;
+      color: #ccc;
       line-height: 1.6;
     }
     nav {
-      background: #001f3f;
+      background: #111;
       text-align: center;
       padding: 0.8rem;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 2px 15px rgba(255,255,255,0.1);
     }
     nav a {
-      color: #fff;
+      color: #ccc;
       margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
-      transition: color 0.3s ease;
       font-size: 1.1rem;
       padding: 0.5rem 1rem;
       border-radius: 4px;
+      transition: background 0.3s ease;
     }
     nav a:hover {
-      color: #00bfff;
       background: rgba(255,255,255,0.1);
+      color: #fff;
     }
     section {
       padding: 3rem 1rem;
@@ -49,8 +44,7 @@
     h2 {
       font-family: 'Playfair Display', serif;
       font-size: 2.3rem;
-      color: #002e5b;
-      margin-bottom: 1.5rem;
+      color: silver;
       text-align: center;
       position: relative;
       padding-bottom: 15px;
@@ -63,11 +57,21 @@
       transform: translateX(-50%);
       width: 80px;
       height: 3px;
-      background: #00bfff;
+      background: silver;
+    }
+    .services-box,
+    .contact-box,
+    .education-box {
+      background: #1a1a1a;
+      color: #e0e0e0;
+      padding: 2.5rem;
+      margin-top: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255,255,255,0.05);
+      border-left: 4px solid silver;
     }
     ul, ol {
       padding-left: 1.5rem;
-      margin-top: 0.5rem;
     }
     li {
       margin-bottom: 0.8rem;
@@ -76,213 +80,89 @@
     }
     li:before {
       content: "•";
-      color: #00bfff;
+      color: silver;
       font-weight: bold;
       position: absolute;
       left: 0;
-      top: 0;
-    }
-    .services-box, .contact-box, .education-box {
-      background: #fff;
-      padding: 2.5rem;
-      margin-top: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      border-left: 4px solid #00bfff;
     }
     footer {
-      background: #002e5b;
-      color: #fff;
+      background: #111;
+      color: #ccc;
       text-align: center;
       padding: 1.8rem;
       font-size: 0.95rem;
-      margin-top: 2rem;
     }
     a {
-      color: #005aa7;
+      color: silver;
       text-decoration: none;
-      transition: all 0.3s ease;
     }
     a:hover {
       text-decoration: underline;
-      color: #003366;
+      color: #fff;
+    }
+    #welcome {
+      position: relative;
+      height: 85vh;
+      background: linear-gradient(135deg, #111, #222);
+      color: silver;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    #welcome h1 span {
+      color: #e0e0e0;
+    }
+    #welcome a {
+      padding: 14px 32px;
+      background: silver;
+      color: #111;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-decoration: none;
+      box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+    }
+    #welcome a:hover {
+      background: #ccc;
+      box-shadow: 0 8px 20px rgba(255,255,255,0.4);
+    }
+    h3 {
+      color: silver;
+    }
+    h3 i,
+    .icon-box,
+    .contact-box i,
+    .stat-box i {
+      background: #2a2a2a;
+      color: silver;
+      border: 1px solid #444;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       margin: 1.2rem 0;
-      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      color: #ccc;
     }
     table, th, td {
-      border: 1px solid #ddd;
-    }
-    th, td {
-      padding: 12px;
-      text-align: center;
+      border: 1px solid #444;
     }
     th {
-      background: #e6f0ff;
-      font-weight: bold;
+      background: #222;
     }
     tr:nth-child(even) {
-      background-color: #f8fbff;
-    }
-    #welcome {
-      position: relative;
-      height: 85vh;
-      background: linear-gradient(135deg, #002e5b, #004e92);
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-    }
-    #welcome:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="0,0 100,0 100,100" fill="rgba(255,255,255,0.05)"/></svg>');
-      background-size: 100% 100%;
-    }
-    #welcome h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3.5rem;
-      margin-bottom: 1.5rem;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      letter-spacing: 1px;
-    }
-    #welcome span {
-      color: #00d4ff;
-      display: inline-block;
-    }
-    #welcome p {
-      font-size: 1.4rem;
-      margin-bottom: 2.5rem;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.8;
-    }
-    #welcome a {
-      padding: 14px 32px;
-      background: #00d4ff;
-      color: #002e5b;
-      border-radius: 30px;
-      font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-      position: relative;
-      z-index: 1;
-    }
-    #welcome a:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 212, 255, 0.6);
-      text-decoration: none;
-    }
-    h3 {
-      font-size: 1.4rem;
-      margin: 1.8rem 0 1rem;
-      color: #002e5b;
-      display: flex;
-      align-items: center;
-    }
-    h3 i {
-      background: #e6f0ff;
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 15px;
-      color: #005aa7;
-      border: 1px solid #d0e0f0;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-    }
-    .icon-box {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: #e6f0ff;
-      color: #005aa7;
-      margin-right: 15px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-    }
-    .contact-box p {
-      margin: 1.2rem 0;
-      display: flex;
-      align-items: center;
-      font-size: 1.1rem;
-    }
-    .contact-box i {
-      width: 40px;
-      height: 40px;
-      background: #e6f0ff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 15px;
-      color: #005aa7;
-    }
-    .stats-container {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      margin: 2rem 0;
+      background-color: #111;
     }
     .stat-box {
-      background: white;
-      padding: 1.5rem;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      width: 22%;
-      min-width: 200px;
-      margin: 0.5rem;
-    }
-    .stat-box i {
-      font-size: 2.5rem;
-      color: #005aa7;
-      margin-bottom: 1rem;
+      background: #1a1a1a;
+      color: silver;
+      box-shadow: 0 5px 15px rgba(255,255,255,0.05);
     }
     .stat-number {
-      font-size: 2.2rem;
-      font-weight: bold;
-      color: #002e5b;
+      color: silver;
     }
     .stat-label {
-      color: #666;
-      margin-top: 0.5rem;
-    }
-    @media (max-width: 768px) {
-      #welcome h1 {
-        font-size: 2.5rem;
-      }
-      #welcome p {
-        font-size: 1.1rem;
-      }
-      .stat-box {
-        width: 45%;
-      }
-    }
-    @media (max-width: 480px) {
-      nav a {
-        display: block;
-        margin: 0.5rem 0;
-      }
-      .stat-box {
-        width: 100%;
-      }
+      color: #aaa;
     }
   </style>
 </head>
@@ -312,29 +192,6 @@
       <p>
         Established in 2010, SAG Enterprises provides expert financial consultation services to both individuals and businesses. Our seasoned professionals focus on helping clients navigate complex financial landscapes through compliance, strategic planning, and achieving financial clarity.
       </p>
-      
-      <div class="stats-container">
-        <div class="stat-box">
-          <i class="fas fa-user-tie"></i>
-          <div class="stat-number">15+</div>
-          <div class="stat-label">Years Experience</div>
-        </div>
-        <div class="stat-box">
-          <i class="fas fa-users"></i>
-          <div class="stat-number">1200+</div>
-          <div class="stat-label">Satisfied Clients</div>
-        </div>
-        <div class="stat-box">
-          <i class="fas fa-file-contract"></i>
-          <div class="stat-number">500+</div>
-          <div class="stat-label">Businesses Served</div>
-        </div>
-        <div class="stat-box">
-          <i class="fas fa-award"></i>
-          <div class="stat-number">98%</div>
-          <div class="stat-label">Success Rate</div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -369,25 +226,6 @@
         <li>ROC Filing, PAN/TAN, MSME</li>
         <li>Licensing & Trade Documentation</li>
       </ul>
-
-      <h3><i class="fas fa-chart-line"></i> Financial Planning & Advisory</h3>
-      <ul>
-        <li>Budgeting, Forecasting, Investment Guidance</li>
-        <li>Home & Business Loan Support</li>
-      </ul>
-
-      <h3><i class="fas fa-user-tie"></i> Payroll & Labour Compliance</h3>
-      <ul>
-        <li>Salary Processing, EPF/ESIC Returns</li>
-        <li>Gratuity, Bonus, PT Compliance</li>
-      </ul>
-
-      <h3><i class="fas fa-handshake"></i> Other Value Services</h3>
-      <ul>
-        <li>Virtual CFO, Digital Signatures</li>
-        <li>Import Export Code (IEC)</li>
-        <li>Loan Project Reports & CMA Data</li>
-      </ul>
     </div>
   </section>
 
@@ -395,56 +233,8 @@
   <section id="education">
     <h2><i class="fas fa-graduation-cap"></i> Client Education Corner</h2>
     <div class="education-box">
-      <h3><i class="fas fa-home"></i> 1. What is a Home Loan?</h3>
+      <h3><i class="fas fa-home"></i> What is a Home Loan?</h3>
       <p>A secured loan used to purchase, construct or renovate a house.</p>
-      <ul>
-        <li>Buy Flat/House</li>
-        <li>Renovation or Construction</li>
-        <li>Purchase Plot with/without construction</li>
-      </ul>
-
-      <h3><i class="fas fa-clipboard-check"></i> 2. Eligibility Criteria</h3>
-      <table>
-        <tr><th>Criteria</th><th>Salaried</th><th>Self-employed</th></tr>
-        <tr><td>Age</td><td>21-60</td><td>21-65</td></tr>
-        <tr><td>Income</td><td>₹25,000+</td><td>3yr ITRs</td></tr>
-        <tr><td>Credit Score</td><td colspan="2">700+ recommended</td></tr>
-        <tr><td>LTV</td><td colspan="2">75%-90% of value</td></tr>
-      </table>
-
-      <h3><i class="fas fa-file-signature"></i> 3. Documents Required</h3>
-      <ul>
-        <li>PAN, Aadhaar, Salary Slips / ITRs</li>
-        <li>Bank Statement, Property Papers</li>
-        <li>Title Deed, Sale Agreement, NOC</li>
-      </ul>
-
-      <h3><i class="fas fa-hand-holding-usd"></i> 4. Types of Loans</h3>
-      <ul>
-        <li>Home Purchase / Top-up Loan</li>
-        <li>Construction / Improvement Loan</li>
-        <li>Plot + Construction</li>
-      </ul>
-
-      <h3><i class="fas fa-calculator"></i> 5. EMI & Charges</h3>
-      <p>Rates between 8.35%–10.5%, tenure up to 30 years.</p>
-      <ul>
-        <li>Processing: 0.25–1%</li>
-        <li>Legal/Valuation: ₹5K–₹10K</li>
-        <li>Prepayment: Free (floating)</li>
-      </ul>
-
-      <h3><i class="fas fa-university"></i> 6. Banks Offering (2025)</h3>
-      <ul>
-        <li>SBI, LIC, HDFC, ICICI, PNB Housing</li>
-      </ul>
-
-      <h3><i class="fas fa-headset"></i> 7. Our Assistance Includes</h3>
-      <ul>
-        <li>CMA Data, Form Filling</li>
-        <li>Project Reports</li>
-        <li>Comparison & Application Help</li>
-      </ul>
     </div>
   </section>
 
@@ -463,21 +253,20 @@
   <footer>
     <p>&copy; 2025 SAG Enterprises. All rights reserved. | Providing financial expertise since 2010</p>
     <p style="margin-top: 10px;">
-      <a href="#" style="color: #fff; margin: 0 10px;"><i class="fab fa-facebook-f"></i></a>
-      <a href="#" style="color: #fff; margin: 0 10px;"><i class="fab fa-twitter"></i></a>
-      <a href="#" style="color: #fff; margin: 0 10px;"><i class="fab fa-linkedin-in"></i></a>
-      <a href="#" style="color: #fff; margin: 0 10px;"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
     </p>
   </footer>
 
-  <!-- Typing Animation Script -->
+  <!-- Typing Animation -->
   <script>
     const text = document.querySelector(".typing");
     let str = text.textContent;
     let split = str.split("");
     text.textContent = "";
     let char = 0;
-
     function type() {
       if (char < split.length) {
         text.textContent += split[char];
