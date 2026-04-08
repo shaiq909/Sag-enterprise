@@ -1,140 +1,131 @@
-import React from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Budget Tracker</title>
 
-// Single-file React component for IST Academy landing page // TailwindCSS classes are used (no imports required in this file) // Replace phone/address placeholders as needed
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial, sans-serif}
+body{background:#f5f6fa}
+.page{max-width:900px;margin:auto;padding:20px}
 
-export default function ISTAcademyWebsite() { return ( <div className="min-h-screen bg-gray-50 text-gray-800 antialiased"> {/* Header */} <header className="bg-indigo-900 text-white"> <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between"> <div className="flex items-center space-x-4"> <div className="w-12 h-12 rounded-md bg-yellow-400 flex items-center justify-center font-bold text-indigo-900">IST</div> <div> <h1 className="text-2xl font-extrabold tracking-wider">I.S.T ACADEMY</h1> <p className="text-sm opacity-80">Your pathway to commerce excellence</p> </div> </div>
+.card{background:#fff;border-radius:10px;padding:20px;margin-bottom:15px;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
 
-<nav className="hidden md:flex gap-6 text-sm">
-        <a href="#courses" className="hover:underline">Courses</a>
-        <a href="#faculty" className="hover:underline">Faculty</a>
-        <a href="#contact" className="hover:underline">Contact</a>
-        <a href="#admissions" className="bg-yellow-400 text-indigo-900 px-4 py-2 rounded-lg font-semibold">Apply Now</a>
-      </nav>
-    </div>
-  </header>
+h2{margin-bottom:10px}
 
-  {/* Hero */}
-  <section className="bg-gradient-to-br from-indigo-800 via-indigo-900 to-gray-900 text-white">
-    <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-      <div>
-        <h2 className="text-4xl md:text-5xl font-extrabold">Class 11/12 Commerce & B.Com Coaching</h2>
-        <p className="mt-4 text-lg opacity-90">Concept-based learning • Regular tests • Experienced faculty • Small batches</p>
+.input-row{display:flex;gap:10px;margin-bottom:10px}
+input,select,button{padding:10px;border-radius:6px;border:1px solid #ccc}
+button{cursor:pointer;background:#007bff;color:white;border:none}
 
-        <ul className="mt-6 space-y-2">
-          <li className="inline-block bg-white/10 px-4 py-2 rounded-full">Accountancy</li>
-          <li className="inline-block bg-white/10 px-4 py-2 rounded-full ml-2">Business Studies & Economics</li>
-          <li className="inline-block bg-white/10 px-4 py-2 rounded-full ml-2">Costing & Taxation</li>
-        </ul>
+.log-item{display:flex;justify-content:space-between;margin:5px 0;padding:5px;border-bottom:1px solid #eee}
 
-        <div className="mt-8 flex gap-4">
-          <a href="#admissions" className="bg-yellow-400 text-indigo-900 px-6 py-3 rounded-lg font-semibold shadow">Join Crash Course</a>
-          <a href="#contact" className="border border-white/20 px-6 py-3 rounded-lg">Contact Us</a>
-        </div>
+.stat{font-size:18px;margin:5px 0}
+</style>
+</head>
 
-        <p className="mt-6 text-sm opacity-80">Crash Course from <strong>1<sup>st</sup> Dec 2025</strong></p>
-      </div>
+<body>
 
-      {/* Pamphlet image preview */}
-      
-    </div>
-  </section>
+<div class="page">
 
-  {/* Courses Section */}
-  <section id="courses" className="max-w-6xl mx-auto px-6 py-12">
-    <h3 className="text-2xl font-bold mb-6">Courses Offered</h3>
+<div class="card">
+<h2>Daily Budget</h2>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div className="p-6 rounded-xl border">
-        <h4 className="font-semibold">Class 11/12 Commerce Coaching</h4>
-        <ul className="mt-3 space-y-1 text-sm opacity-90">
-          <li>Accountancy</li>
-          <li>Business Studies</li>
-          <li>Economics</li>
-          <li>Mathematics / Applied Maths</li>
-          <li>English</li>
-        </ul>
-      </div>
+<div class="stat">Limit: ₹<span id="limit">500</span></div>
+<div class="stat">Spent: ₹<span id="spent">0</span></div>
+<div class="stat">Remaining: ₹<span id="remaining">500</span></div>
+<div class="stat">Balance: ₹<span id="balance">0</span></div>
 
-      <div className="p-6 rounded-xl border">
-        <h4 className="font-semibold">B.Com Coaching</h4>
-        <ul className="mt-3 space-y-1 text-sm opacity-90">
-          <li>Financial Accounting</li>
-          <li>Cost & Management Accounting</li>
-          <li>Taxation</li>
-          <li>Business Law</li>
-          <li>Economics & Statistics</li>
-        </ul>
-      </div>
+</div>
 
-      <div className="p-6 rounded-xl border">
-        <h4 className="font-semibold">Why IST Academy?</h4>
-        <ul className="mt-3 space-y-1 text-sm opacity-90">
-          <li>Experienced & Qualified Faculty</li>
-          <li>Concept-Based Learning & Notes</li>
-          <li>Small Batches & Personalized Attention</li>
-          <li>Regular Tests with Feedback</li>
-          <li>Affordable Fees</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+<div class="card">
+<h2>Add Expense</h2>
 
-  {/* Faculty */}
-  <section id="faculty" className="bg-gray-100 py-12">
-    <div className="max-w-6xl mx-auto px-6">
-      <h3 className="text-2xl font-bold mb-6">Faculty</h3>
+<div class="input-row">
+<input type="number" id="amount" placeholder="Amount">
+<input type="text" id="note" placeholder="Note">
+<select id="category">
+<option value="Food">Food</option>
+<option value="Travel">Travel</option>
+<option value="Shopping">Shopping</option>
+<option value="Other">Other</option>
+</select>
+<button onclick="addExpense()">Add</button>
+</div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="p-6 bg-white rounded-xl shadow-sm text-center">
-          <div className="h-24 w-24 mx-auto rounded-full bg-indigo-50 flex items-center justify-center font-semibold">IK</div>
-          <h4 className="mt-4 font-semibold">Irfan Khan (Co-Founder)</h4>
-          <p className="text-sm opacity-80">B.Com(H)</p>
-        </div>
+</div>
 
-        <div className="p-6 bg-white rounded-xl shadow-sm text-center">
-          <div className="h-24 w-24 mx-auto rounded-full bg-indigo-50 flex items-center justify-center font-semibold">CS</div>
-          <h4 className="mt-4 font-semibold">CA Shaiq (Co-Founder)</h4>
-          <p className="text-sm opacity-80">Chartered Accountant | B.Com(H)</p>
-        </div>
+<div class="card">
+<h2>Today's Expenses</h2>
+<div id="log"></div>
+</div>
 
-        <div className="p-6 bg-white rounded-xl shadow-sm text-center">
-          <div className="h-24 w-24 mx-auto rounded-full bg-indigo-50 flex items-center justify-center font-semibold">TA</div>
-          <h4 className="mt-4 font-semibold">Takshir Akhtar (Co-Founder)</h4>
-          <p className="text-sm opacity-80">B.Com(H) | Corporate Experience</p>
-        </div>
-      </div>
-    </div>
-  </section>
+</div>
 
-  {/* Contact & Footer */}
-  <footer id="contact" className="max-w-6xl mx-auto px-6 py-12">
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div>
-        <h3 className="text-2xl font-bold">Contact Us</h3>
-        <p className="mt-4">For admissions & queries, call or WhatsApp:</p>
-        <ul className="mt-4 space-y-2 text-sm">
-          <li>+91 79808 57943</li>
-          <li>+91 91230 14834</li>
-          <li>+91 877 787 0061</li>
-        </ul>
+<script>
 
-        <p className="mt-6 text-sm opacity-80">Location: G-31 Bangla Basti, Garden Reach, Kolkata - 700024<br />Email: istacademy8@gmail.com</p>
-      </div>
+let data = JSON.parse(localStorage.getItem("budgetData")) || {
+balance: 3738,
+limit: 500,
+entries: []
+};
 
-      <div>
-        <h3 className="text-2xl font-bold">Admissions</h3>
-        <p className="mt-4">Admission Open for 2025 Session — small seats available for the crash course starting 1st Dec 2025.</p>
-
-        
-      </div>
-    </div>
-
-    <div className="mt-12 text-center text-sm opacity-70">© 2025 I.S.T Academy. All rights reserved.</div>
-    <p className="mt-4 text-center text-sm">
-WhatsApp Group: <a href="https://chat.whatsapp.com/CvmLhIxqPTdDB3n01toTDn?mode=hqrt3" className="text-indigo-700 underline">Join Here</a>
-
-  </p>
-</footer>
-    </div>
-  );
+function save(){
+localStorage.setItem("budgetData", JSON.stringify(data));
 }
+
+function render(){
+
+let spent = data.entries.reduce((sum,e)=>sum+e.amount,0);
+let remaining = data.limit - spent;
+
+document.getElementById("limit").innerText = data.limit;
+document.getElementById("spent").innerText = spent;
+document.getElementById("remaining").innerText = remaining;
+document.getElementById("balance").innerText = data.balance - spent;
+
+let log = document.getElementById("log");
+log.innerHTML = "";
+
+data.entries.forEach((e,i)=>{
+let div = document.createElement("div");
+div.className="log-item";
+div.innerHTML = `
+<span>${e.note} (${e.category})</span>
+<span>₹${e.amount} <button onclick="deleteExpense(${i})">x</button></span>
+`;
+log.appendChild(div);
+});
+
+}
+
+function addExpense(){
+
+let amt = parseFloat(document.getElementById("amount").value);
+let note = document.getElementById("note").value;
+let cat = document.getElementById("category").value;
+
+if(!amt || amt<=0) return;
+
+data.entries.push({amount:amt, note:note || "Expense", category:cat});
+
+save();
+render();
+
+document.getElementById("amount").value="";
+document.getElementById("note").value="";
+
+}
+
+function deleteExpense(index){
+data.entries.splice(index,1);
+save();
+render();
+}
+
+render();
+
+</script>
+
+</body>
+</html>
