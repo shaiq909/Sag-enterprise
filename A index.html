@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Budget Tracker</title>
+  <style>
+    :root {
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --color-background-primary: #ffffff;
+      --color-background-secondary: #f5f5f4;
+      --color-text-primary: #1c1b1a;
+      --color-text-secondary: #6b6965;
+      --color-text-tertiary: #a8a49f;
+      --color-border-primary: #1c1b1a;
+      --color-border-secondary: #d6d3d0;
+      --color-border-tertiary: #e8e5e2;
+      --border-radius-md: 8px;
+      --border-radius-lg: 12px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-background-primary: #1c1b1a;
+        --color-background-secondary: #282725;
+        --color-text-primary: #f5f5f4;
+        --color-text-secondary: #a8a49f;
+        --color-text-tertiary: #6b6965;
+        --color-border-primary: #f5f5f4;
+        --color-border-secondary: #3d3b38;
+        --color-border-tertiary: #2e2d2b;
+      }
+    }
+    body {
+      background: var(--color-background-primary);
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 1rem;
+      min-height: 100vh;
+    }
+  </style>
+  <style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.page{padding:1rem 0 2rem}
+.tab-bar{display:flex;gap:3px;margin-bottom:1rem;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:3px}
+.tab{flex:1;padding:6px 4px;text-align:center;font-size:12px;border-radius:6px;cursor:pointer;color:var(--color-text-secondary);border:none;background:transparent}
+.tab.active{background:var(--color-background-primary);color:var(--color-text-primary);font-weight:500;border:0.5px solid var(--color-border-tertiary)}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin-bottom:1rem}
+.date-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:0.75rem}
+.date-big{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.pill{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500}
+.pill-work{background:#E6F1FB;color:#0C447C}
+.pill-weekend{background:#FAEEDA;color:#633806}
+.pill-renew{background:#EAF3DE;color:#27500A}
+.pill-custom{background:#EEEDFE;color:#3C3489}
+.limit-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.limit-label{font-size:13px;color:var(--color-text-secondary)}
+.limit-val{font-size:26px;font-weight:500;color:var(--color-text-primary)}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:1rem}
+.met{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px}
+.met-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:3px}
+.met-val{font-size:17px;font-weight:500;color:var(--color-text-primary)}
+.met-val.ok{color:#0F6E56}.met-val.warn{color:#854F0B}.met-val.danger{color:#A32D2D}
+.bar-wrap{height:6px;background:var(--color-background-secondary);border-radius:4px;overflow:hidden;margin-bottom:1rem}
+.bar-fill{height:100%;border-radius:4px;transition:width 0.4s}
+.input-row{display:grid;grid-template-columns:1fr 1fr auto auto;gap:6px;margin-bottom:1rem;align-items:center}
+.input-row input,.input-row select{padding:8px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:14px;color:var(--color-text-primary);background:var(--color-background-primary);outline:none;width:100%}
+.input-row select{appearance:none;cursor:pointer}
+.add-btn{padding:8px 14px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);font-size:13px;color:var(--color-text-primary);cursor:pointer;white-space:nowrap}
+.add-btn:hover{background:var(--color-background-primary)}
+.log{border-top:0.5px solid var(--color-border-tertiary);padding-top:0.75rem}
+.log-title{font-size:12px;color:var(--color-text-secondary);margin-bottom:0.5rem}
+.log-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px;gap:8px}
+.log-item:last-child{border-bottom:none}
+.cat-tag{font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500;flex-shrink:0}
+.cat-food{background:#EAF3DE;color:#27500A}
+.cat-travel{background:#E6F1FB;color:#0C447C}
+.cat-shop{background:#FAEEDA;color:#633806}
+.cat-health{background:#FCEBEB;color:#791F1F}
+.cat-other{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.log-note{color:var(--color-text-secondary);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.log-amt{font-weight:500;color:var(--color-text-primary);flex-shrink:0}
+.del-btn{background:transparent;border:none;cursor:pointer;font-size:11px;color:var(--color-text-tertiary);padding:2px 5px;flex-shrink:0}
+.del-btn:hover{color:#A32D2D}
+.alert-box{border-radius:var(--border-radius-md);padding:11px 14px;margin-bottom:1rem;font-size:13px;display:flex;align-items:flex-start;gap:10px}
+.alert-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.alert-danger{background:#FCEBEB;border:0.5px solid #F09595;color:#791F1F}
+.alert-warn{background:#FAEEDA;border:0.5px solid #FAC775;color:#633806}
+.alert-ok{background:#EAF3DE;border:0.5px solid #97C459;color:#27500A}
+.alert-info{background:#E6F1FB;border:0.5px solid #85B7EB;color:#0C447C}
+.alert-title{font-weight:500;margin-bottom:2px}
+.alert-sub{font-size:12px;opacity:0.85}
+.streak-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.streak-row:last-child{border-bottom:none}
+.streak-num{font-size:22px;font-weight:500;color:var(--color-text-primary);min-width:36px}
+.streak-label{font-size:13px;color:var(--color-text-secondary)}
+.streak-label b{color:var(--color-text-primary);font-weight:500}
+.section-title{font-size:15px;font-weight:500;color:var(--color-text-primary);margin-bottom:0.75rem}
+.mini-cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;margin-bottom:1rem}
+.cal-head{font-size:10px;color:var(--color-text-tertiary);text-align:center;padding:2px 0}
+.cal-day{font-size:12px;text-align:center;padding:5px 2px;border-radius:var(--border-radius-md);color:var(--color-text-secondary);cursor:pointer}
+.cal-day:hover:not(.empty){opacity:0.75}
+.cal-day.today{background:#185FA5;color:#E6F1FB;font-weight:500}
+.cal-day.over-limit{background:#FCEBEB;color:#A32D2D}
+.cal-day.under-limit{background:#EAF3DE;color:#27500A}
+.cal-day.empty{opacity:0.2;cursor:default}
+.cal-day.selected{outline:2px solid var(--color-border-primary);outline-offset:1px}
+.day-detail{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:1rem;font-size:13px}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:11px;color:var(--color-text-secondary);margin-bottom:1rem}
+.legend span{display:flex;align-items:center;gap:4px}
+.legend-dot{width:9px;height:9px;border-radius:2px;display:inline-block;flex-shrink:0}
+.month-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.month-nav button{background:transparent;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:5px 12px;font-size:13px;color:var(--color-text-secondary);cursor:pointer}
+.month-nav button:hover{background:var(--color-background-secondary)}
+.month-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.stats-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:1rem}
+.stat-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px}
+.stat-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px}
+.stat-val{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.hist-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.hist-item:last-child{border-bottom:none}
+.hist-month{font-weight:500;color:var(--color-text-primary)}
+.hist-meta{color:var(--color-text-secondary);font-size:12px}
+.empty-state{text-align:center;padding:2rem;color:var(--color-text-secondary);font-size:13px}
+.settings-row{display:flex;flex-direction:column;gap:4px;padding:12px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.settings-row:last-child{border-bottom:none}
+.settings-label{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.settings-desc{font-size:11px;color:var(--color-text-secondary);margin-bottom:6px}
+.settings-input-row{display:flex;gap:8px;align-items:center}
+.settings-input-row input{padding:8px 10px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:14px;color:var(--color-text-primary);background:var(--color-background-primary);outline:none;width:140px}
+.save-btn{padding:8px 16px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-secondary);font-size:13px;color:var(--color-text-primary);cursor:pointer}
+.save-btn:hover{background:var(--color-background-primary)}
+.save-btn.saved{border-color:#97C459;color:#27500A;background:#EAF3DE}
+.settings-cur{font-size:13px;color:var(--color-text-secondary)}
+.chart-bars{display:flex;align-items:flex-end;gap:4px;height:80px;margin-bottom:6px}
+.chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.chart-bar{width:100%;border-radius:3px 3px 0 0;min-height:2px;transition:height 0.3s}
+.chart-bar-label{font-size:10px;color:var(--color-text-tertiary)}
+.chart-bar-val{font-size:10px;color:var(--color-text-secondary)}
+.cat-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:13px}
+.cat-row:last-child{border-bottom:none}
+.cat-bar-bg{flex:1;height:5px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}
+.cat-bar-fill{height:100%;border-radius:3px}
+.cat-name{width:64px;font-size:12px;color:var(--color-text-secondary)}
+.cat-pct{font-size:12px;color:var(--color-text-secondary);width:32px;text-align:right}
+.cat-amt-s{font-size:12px;font-weight:500;color:var(--color-text-primary);width:56px;text-align:right}
+  </style>
+</head>
+<body>
+ 
+<div class="page">
+  <div id="alertArea"></div>
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('today')">Today</button>
+    <button class="tab" onclick="switchTab('insights')">Insights</button>
+    <button class="tab" onclick="switchTab('calendar')">Calendar</button>
+    <button class="tab" onclick="switchTab('history')">History</button>
+    <button class="tab" onclick="switchTab('settings')">Settings</button>
+  </div>
+ 
+  <div id="tab-today">
+    <div class="card">
+      <div class="date-row">
+        <span class="date-big" id="todayDate"></span>
+        <span class="pill" id="dayPill"></span>
+      </div>
+      <div class="limit-row">
+        <span class="limit-label">Today's limit</span>
+        <span class="limit-val" id="limitVal"></span>
+      </div>
+      <div class="metrics">
+        <div class="met"><div class="met-label">Spent</div><div class="met-val" id="spentToday">₹0</div></div>
+        <div class="met"><div class="met-label">Remaining</div><div class="met-val" id="remToday"></div></div>
+        <div class="met"><div class="met-label">Balance</div><div class="met-val" id="totalBal"></div></div>
+      </div>
+      <div class="bar-wrap"><div class="bar-fill" id="barFill"></div></div>
+      <div class="input-row">
+        <input type="number" id="amtInput" placeholder="₹ Amount" min="0" step="1">
+        <input type="text" id="noteInput" placeholder="Note">
+        <select id="catInput">
+          <option value="other">Other</option>
+          <option value="food">Food</option>
+          <option value="travel">Travel</option>
+          <option value="shop">Shopping</option>
+          <option value="health">Health</option>
+        </select>
+        <button class="add-btn" onclick="addSpend()">+ Add</button>
+      </div>
+      <div class="log" id="logWrap" style="display:none">
+        <div class="log-title">Today's entries</div>
+        <div id="logList"></div>
+      </div>
+    </div>
+    <div class="card" id="streakCard"></div>
+  </div>
+ 
+  <div id="tab-insights" style="display:none">
+    <div class="card">
+      <div class="section-title">Last 7 days</div>
+      <div class="chart-bars" id="weekChart"></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--color-text-tertiary)" id="weekLabels"></div>
+    </div>
+    <div class="card">
+      <div class="section-title">Spending by category</div>
+      <div id="catBreakdown"></div>
+    </div>
+    <div class="card">
+      <div class="section-title">This month at a glance</div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Total spent</div><div class="stat-val" id="ins-spent"></div></div>
+        <div class="stat-card"><div class="stat-label">Daily average</div><div class="stat-val" id="ins-avg"></div></div>
+        <div class="stat-card"><div class="stat-label">Best day</div><div class="stat-val" id="ins-best"></div></div>
+        <div class="stat-card"><div class="stat-label">Days under limit</div><div class="stat-val" id="ins-under"></div></div>
+      </div>
+    </div>
+  </div>
+ 
+  <div id="tab-calendar" style="display:none">
+    <div class="card">
+      <div class="month-nav">
+        <button onclick="changeCalMonth(-1)">‹</button>
+        <span class="month-title" id="calTitle"></span>
+        <button onclick="changeCalMonth(1)">›</button>
+      </div>
+      <div class="mini-cal" id="miniCal"></div>
+      <div class="legend">
+        <span><span class="legend-dot" style="background:#185FA5"></span>Today</span>
+        <span><span class="legend-dot" style="background:#EAF3DE;border:0.5px solid #97C459"></span>Under limit</span>
+        <span><span class="legend-dot" style="background:#FCEBEB;border:0.5px solid #F09595"></span>Over limit</span>
+      </div>
+      <div id="dayDetail" style="display:none"></div>
+    </div>
+    <div class="card">
+      <div class="section-title" id="calStatsTitle"></div>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-label">Total spent</div><div class="stat-val" id="statSpent"></div></div>
+        <div class="stat-card"><div class="stat-label">Days recorded</div><div class="stat-val" id="statDays"></div></div>
+        <div class="stat-card"><div class="stat-label">Days over limit</div><div class="stat-val" id="statOver"></div></div>
+        <div class="stat-card"><div class="stat-label">Avg per day</div><div class="stat-val" id="statAvg"></div></div>
+      </div>
+    </div>
+  </div>
+ 
+  <div id="tab-history" style="display:none">
+    <div class="card">
+      <div class="section-title">Monthly record</div>
+      <div id="histList"></div>
+    </div>
+  </div>
+ 
+  <div id="tab-settings" style="display:none">
+    <div class="card">
+      <div class="section-title">Limits</div>
+      <div class="settings-row">
+        <div class="settings-label">Weekday limit</div>
+        <div class="settings-desc">Mon–Fri daily cap</div>
+        <div class="settings-input-row">
+          <input type="number" id="set-weekday" placeholder="₹ amount" min="0" step="1">
+          <button class="save-btn" id="btn-weekday" onclick="saveSetting('weekday')">Save</button>
+          <span class="settings-cur" id="cur-weekday"></span>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-label">Weekend limit</div>
+        <div class="settings-desc">Sat & Sun daily cap</div>
+        <div class="settings-input-row">
+          <input type="number" id="set-weekend" placeholder="₹ amount" min="0" step="1">
+          <button class="save-btn" id="btn-weekend" onclick="saveSetting('weekend')">Save</button>
+          <span class="settings-cur" id="cur-weekend"></span>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-label">Override today's limit</div>
+        <div class="settings-desc">One-time custom limit, resets tomorrow</div>
+        <div class="settings-input-row">
+          <input type="number" id="set-today" placeholder="₹ amount" min="0" step="1">
+          <button class="save-btn" id="btn-today" onclick="saveSetting('today')">Set</button>
+          <span class="settings-cur" id="cur-today"></span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-title">Balance</div>
+      <div class="settings-row">
+        <div class="settings-label">Current balance</div>
+        <div class="settings-desc">Manually correct this month's balance</div>
+        <div class="settings-input-row">
+          <input type="number" id="set-balance" placeholder="₹ amount" min="0" step="1">
+          <button class="save-btn" id="btn-balance" onclick="saveSetting('balance')">Update</button>
+          <span class="settings-cur" id="cur-balance"></span>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-label">Monthly renewal amount</div>
+        <div class="settings-desc">Added on renewal day</div>
+        <div class="settings-input-row">
+          <input type="number" id="set-renew" placeholder="₹ amount" min="0" step="1">
+          <button class="save-btn" id="btn-renew" onclick="saveSetting('renew')">Save</button>
+          <span class="settings-cur" id="cur-renew"></span>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-label">Renewal day</div>
+        <div class="settings-desc">Day of month budget renews (1–28)</div>
+        <div class="settings-input-row">
+          <input type="number" id="set-renewday" placeholder="Day" min="1" max="28" step="1">
+          <button class="save-btn" id="btn-renewday" onclick="saveSetting('renewday')">Save</button>
+          <span class="settings-cur" id="cur-renewday"></span>
+        </div>
+      </div>
+      <div class="settings-row">
+        <div class="settings-label">Low balance alert threshold</div>
+        <div class="settings-desc">Warn when 3-day forecast goes below this</div>
+        <div class="settings-input-row">
+          <input type="number" id="set-alertthresh" placeholder="₹ amount" min="0" step="1">
+          <button class="save-btn" id="btn-alertthresh" onclick="saveSetting('alertthresh')">Save</button>
+          <span class="settings-cur" id="cur-alertthresh"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<script>
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const DAYS_SHORT=['S','M','T','W','T','F','S'];
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const MONTHS_SHORT=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const CAT_LABELS={food:'Food',travel:'Travel',shop:'Shopping',health:'Health',other:'Other'};
+const CAT_COLORS={food:'#639922',travel:'#185FA5',shop:'#BA7517',health:'#A32D2D',other:'#888780'};
+ 
+function loadData(){try{return JSON.parse(localStorage.getItem('bdgt_v4')||'null');}catch(e){return null;}}
+function saveData(d){try{localStorage.setItem('bdgt_v4',JSON.stringify(d));}catch(e){}}
+ 
+let store=loadData();
+if(!store){
+  const now=new Date();
+  const mk=now.getFullYear()+'-'+(now.getMonth()+1);
+  store={entries:{},config:{weekdayLimit:94,weekendLimit:500,renewAmt:4500,renewDay:6,alertThresh:500},balances:{},todayOverride:null};
+  store.balances[mk]={base:3644,adjusted:true};
+}
+if(!store.config.alertThresh) store.config.alertThresh=500;
+ 
+function isWeekend(d){const day=d.getDay();return day===0||day===6;}
+function dateKey(d){return d.toISOString().slice(0,10);}
+function monthKey(d){return d.getFullYear()+'-'+(d.getMonth()+1);}
+ 
+function getDayLimit(d){
+  const k=dateKey(d);
+  const todayK=dateKey(new Date());
+  if(k===todayK&&store.todayOverride&&store.todayOverride.date===todayK) return store.todayOverride.limit;
+  return isWeekend(d)?store.config.weekendLimit:store.config.weekdayLimit;
+}
+ 
+function getBalance(){
+  const now=new Date();
+  const mk=monthKey(now);
+  if(!store.balances) store.balances={};
+  if(!store.balances[mk]) store.balances[mk]={base:store.config.renewAmt};
+  let bal=store.balances[mk].base;
+  Object.entries(store.entries||{}).forEach(([k,entries])=>{
+    const d=new Date(k);
+    if(monthKey(d)===mk) entries.forEach(e=>{bal-=e.amt;});
+  });
+  return bal;
+}
+ 
+function todayEntries(){
+  if(!store.entries) store.entries={};
+  return store.entries[dateKey(new Date())]||[];
+}
+ 
+function getAvgDailySpend(days){
+  const now=new Date();
+  let total=0,count=0;
+  for(let i=1;i<=days;i++){
+    const d=new Date(now);d.setDate(now.getDate()-i);
+    const k=dateKey(d);
+    const entries=(store.entries&&store.entries[k])||[];
+    if(entries.length>0){total+=entries.reduce((s,e)=>s+e.amt,0);count++;}
+  }
+  return count>0?total/count:getDayLimit(now);
+}
+ 
+function getForecast(){
+  const bal=getBalance();
+  const avg=getAvgDailySpend(7);
+  const projected3=bal-(avg*3);
+  const daysLeft=avg>0?Math.floor(bal/avg):999;
+  return{bal,avg:Math.round(avg),projected3:Math.round(projected3),daysLeft};
+}
+ 
+function getStreaks(){
+  const now=new Date();
+  let streak=0,longest=0,cur=0;
+  for(let i=0;i<60;i++){
+    const d=new Date(now);d.setDate(now.getDate()-i);
+    const k=dateKey(d);
+    const entries=(store.entries&&store.entries[k])||[];
+    const spent=entries.reduce((s,e)=>s+e.amt,0);
+    const lim=getDayLimit(d);
+    const underLimit=entries.length===0||spent<=lim;
+    if(i===0&&!underLimit){streak=0;}
+    else if(underLimit){if(i===0||streak===i)streak++;}
+    if(underLimit){cur++;if(cur>longest)longest=cur;}else{cur=0;}
+  }
+  return{current:streak,longest};
+}
+ 
+function addSpend(){
+  const amt=parseFloat(document.getElementById('amtInput').value);
+  const note=document.getElementById('noteInput').value.trim()||'Expense';
+  const cat=document.getElementById('catInput').value;
+  if(!amt||amt<=0) return;
+  const k=dateKey(new Date());
+  if(!store.entries) store.entries={};
+  if(!store.entries[k]) store.entries[k]=[];
+  store.entries[k].push({id:Date.now(),amt,note,cat});
+  saveData(store);
+  document.getElementById('amtInput').value='';
+  document.getElementById('noteInput').value='';
+  document.getElementById('catInput').value='other';
+  renderAll();
+}
+ 
+function delEntry(id){
+  const k=dateKey(new Date());
+  if(!store.entries||!store.entries[k]) return;
+  store.entries[k]=store.entries[k].filter(e=>e.id!==id);
+  saveData(store);renderAll();
+}
+ 
+function delCalEntry(dayKey,id){
+  if(!store.entries||!store.entries[dayKey]) return;
+  store.entries[dayKey]=store.entries[dayKey].filter(e=>e.id!==id);
+  if(store.entries[dayKey].length===0) delete store.entries[dayKey];
+  saveData(store);renderAll();
+  if(selectedCalDay) showDayDetail(selectedCalDay);
+}
+ 
+function saveSetting(key){
+  const btn=document.getElementById('btn-'+key);
+  const inp=document.getElementById('set-'+key);
+  const val=parseFloat(inp.value);
+  if(isNaN(val)||val<0) return;
+  const now=new Date();
+  const mk=monthKey(now);
+  if(key==='weekday') store.config.weekdayLimit=Math.round(val);
+  else if(key==='weekend') store.config.weekendLimit=Math.round(val);
+  else if(key==='today') store.todayOverride={date:dateKey(now),limit:Math.round(val)};
+  else if(key==='balance'){
+    if(!store.balances) store.balances={};
+    const spent=Object.entries(store.entries||{}).filter(([k])=>monthKey(new Date(k))===mk).reduce((s,[,entries])=>s+entries.reduce((a,e)=>a+e.amt,0),0);
+    store.balances[mk]={base:Math.round(val)+spent,adjusted:true};
+  }
+  else if(key==='renew') store.config.renewAmt=Math.round(val);
+  else if(key==='renewday') store.config.renewDay=Math.min(28,Math.max(1,Math.round(val)));
+  else if(key==='alertthresh') store.config.alertThresh=Math.round(val);
+  saveData(store);
+  inp.value='';
+  btn.textContent='Saved!';btn.className='save-btn saved';
+  setTimeout(()=>{btn.textContent=key==='today'?'Set':key==='balance'?'Update':'Save';btn.className='save-btn';},1500);
+  renderAll();renderSettingsValues();
+}
+ 
+function renderSettingsValues(){
+  const todayK=dateKey(new Date());
+  document.getElementById('cur-weekday').textContent='Now: ₹'+store.config.weekdayLimit;
+  document.getElementById('cur-weekend').textContent='Now: ₹'+store.config.weekendLimit;
+  document.getElementById('cur-renew').textContent='Now: ₹'+store.config.renewAmt;
+  document.getElementById('cur-renewday').textContent='Now: '+store.config.renewDay;
+  document.getElementById('cur-alertthresh').textContent='Now: ₹'+store.config.alertThresh;
+  document.getElementById('cur-balance').textContent='Now: ₹'+Math.round(getBalance()).toLocaleString('en-IN');
+  if(store.todayOverride&&store.todayOverride.date===todayK)
+    document.getElementById('cur-today').textContent='Active: ₹'+store.todayOverride.limit;
+  else document.getElementById('cur-today').textContent='None';
+}
+ 
+function renderAlerts(){
+  const fc=getForecast();
+  const area=document.getElementById('alertArea');
+  let html='';
+  const now=new Date();
+  const isRenewDay=now.getDate()===store.config.renewDay;
+  if(isRenewDay){
+    html+=`<div class="alert-box alert-ok"><div class="alert-icon">✦</div><div><div class="alert-title">Budget renewed today</div><div class="alert-sub">₹${store.config.renewAmt.toLocaleString('en-IN')} added to your balance</div></div></div>`;
+  }
+  if(fc.projected3<store.config.alertThresh&&!isRenewDay){
+    const shortBy=Math.abs(Math.min(0,fc.projected3));
+    const lvl=fc.projected3<0?'danger':'warn';
+    html+=`<div class="alert-box alert-${lvl}"><div class="alert-icon">${fc.projected3<0?'▲':'⚑'}</div><div><div class="alert-title">${fc.projected3<0?'Balance will run out':'Low balance warning'}</div><div class="alert-sub">At ₹${fc.avg}/day avg, balance in 3 days: ₹${fc.projected3.toLocaleString('en-IN')}${fc.projected3<0?' — cut back by ₹'+Math.round(shortBy/3)+'/day':''} · ${fc.daysLeft} day${fc.daysLeft!==1?'s':''} of funds left</div></div></div>`;
+  } else if(!isRenewDay&&fc.bal>0){
+    html+=`<div class="alert-box alert-info"><div class="alert-icon">◎</div><div><div class="alert-title">On track</div><div class="alert-sub">~${fc.daysLeft} days of funds at current pace · 3-day forecast: ₹${fc.projected3.toLocaleString('en-IN')}</div></div></div>`;
+  }
+  area.innerHTML=html;
+}
+ 
+function renderStreak(){
+  const s=getStreaks();
+  const fc=getForecast();
+  document.getElementById('streakCard').innerHTML=`
+    <div class="section-title">Quick stats</div>
+    <div class="streak-row"><div class="streak-num">${s.current}</div><div class="streak-label"><b>day streak</b> under limit${s.current===0?' — get back on track!':s.current>=3?' — keep it up!':''}</div></div>
+    <div class="streak-row"><div class="streak-num">${s.longest}</div><div class="streak-label"><b>longest streak</b> in last 60 days</div></div>
+    <div class="streak-row"><div class="streak-num">₹${fc.avg}</div><div class="streak-label"><b>avg daily spend</b> last 7 days</div></div>`;
+}
+ 
+function renderInsights(){
+  const now=new Date();
+  const y=now.getFullYear(),m=now.getMonth();
+  const bars=document.getElementById('weekChart');
+  const labels=document.getElementById('weekLabels');
+  const days=[];
+  let maxSpent=0;
+  for(let i=6;i>=0;i--){
+    const d=new Date(now);d.setDate(now.getDate()-i);
+    const k=dateKey(d);
+    const entries=(store.entries&&store.entries[k])||[];
+    const spent=entries.reduce((s,e)=>s+e.amt,0);
+    const lim=getDayLimit(d);
+    if(spent>maxSpent) maxSpent=spent;
+    days.push({d,k,spent,lim,label:DAYS_SHORT[d.getDay()]});
+  }
+  maxSpent=Math.max(maxSpent,store.config.weekdayLimit);
+  bars.innerHTML=days.map(day=>{
+    const pct=maxSpent>0?Math.round((day.spent/maxSpent)*100):0;
+    const color=day.spent>day.lim?'#E24B4A':day.spent>day.lim*0.8?'#EF9F27':'#1D9E75';
+    const isToday=dateKey(day.d)===dateKey(now);
+    return`<div class="chart-bar-wrap">
+      <div class="chart-bar-val">${day.spent>0?'₹'+Math.round(day.spent):'—'}</div>
+      <div style="width:100%;flex:1;display:flex;align-items:flex-end">
+        <div class="chart-bar" style="height:${pct}%;background:${color};width:100%;opacity:${isToday?1:0.7}"></div>
+      </div>
+      <div class="chart-bar-label" style="font-weight:${isToday?500:400}">${day.label}</div>
+    </div>`;
+  }).join('');
+ 
+  const catTotals={};
+  let grandTotal=0;
+  Object.entries(store.entries||{}).forEach(([k,entries])=>{
+    const d=new Date(k);
+    if(d.getFullYear()===y&&d.getMonth()===m){
+      entries.forEach(e=>{
+        const c=e.cat||'other';
+        catTotals[c]=(catTotals[c]||0)+e.amt;
+        grandTotal+=e.amt;
+      });
+    }
+  });
+  const catEl=document.getElementById('catBreakdown');
+  if(grandTotal===0){catEl.innerHTML='<div class="empty-state">No spending recorded this month</div>';return;}
+  const sorted=Object.entries(catTotals).sort((a,b)=>b[1]-a[1]);
+  catEl.innerHTML=sorted.map(([cat,amt])=>{
+    const pct=Math.round((amt/grandTotal)*100);
+    return`<div class="cat-row">
+      <div class="cat-name">${CAT_LABELS[cat]||cat}</div>
+      <div class="cat-bar-bg"><div class="cat-bar-fill" style="width:${pct}%;background:${CAT_COLORS[cat]||'#888780'}"></div></div>
+      <div class="cat-pct">${pct}%</div>
+      <div class="cat-amt-s">₹${Math.round(amt).toLocaleString('en-IN')}</div>
+    </div>`;
+  }).join('');
+ 
+  let totalSpent=0,daysRec=0,bestSpent=Infinity,daysUnder=0;
+  Object.entries(store.entries||{}).forEach(([k,entries])=>{
+    const d=new Date(k);
+    if(d.getFullYear()===y&&d.getMonth()===m&&entries.length>0){
+      const s=entries.reduce((acc,e)=>acc+e.amt,0);
+      totalSpent+=s;daysRec++;
+      if(s<bestSpent) bestSpent=s;
+      if(s<=getDayLimit(d)) daysUnder++;
+    }
+  });
+  document.getElementById('ins-spent').textContent='₹'+Math.round(totalSpent).toLocaleString('en-IN');
+  document.getElementById('ins-avg').textContent=daysRec>0?'₹'+Math.round(totalSpent/daysRec):'—';
+  document.getElementById('ins-best').textContent=bestSpent<Infinity?'₹'+Math.round(bestSpent):'—';
+  document.getElementById('ins-under').textContent=daysRec>0?daysUnder+'/'+daysRec:'—';
+}
+ 
+let currentTab='today';
+let calViewDate=new Date();
+let selectedCalDay=null;
+ 
+function switchTab(tab){
+  currentTab=tab;
+  ['today','insights','calendar','history','settings'].forEach((t,i)=>{
+    document.getElementById('tab-'+t).style.display=t===tab?'block':'none';
+    document.querySelectorAll('.tab')[i].className='tab'+(t===tab?' active':'');
+  });
+  if(tab==='history') renderHistory();
+  if(tab==='calendar') renderCalendar();
+  if(tab==='settings') renderSettingsValues();
+  if(tab==='insights') renderInsights();
+}
+ 
+function changeCalMonth(dir){
+  calViewDate=new Date(calViewDate.getFullYear(),calViewDate.getMonth()+dir,1);
+  selectedCalDay=null;
+  document.getElementById('dayDetail').style.display='none';
+  renderCalendar();
+}
+ 
+function catTag(cat){return`<span class="cat-tag cat-${cat||'other'}">${CAT_LABELS[cat]||'Other'}</span>`;}
+ 
+function renderToday(){
+  const now=new Date();
+  const limit=getDayLimit(now);
+  const weekend=isWeekend(now);
+  const dayName=DAYS[now.getDay()];
+  const isRenewDay=now.getDate()===store.config.renewDay;
+  const hasOverride=store.todayOverride&&store.todayOverride.date===dateKey(now);
+  document.getElementById('todayDate').textContent=now.getDate()+' '+MONTHS[now.getMonth()]+' '+now.getFullYear();
+  const pill=document.getElementById('dayPill');
+  pill.textContent=dayName+(isRenewDay?' · Renewal':hasOverride?' · Custom':'');
+  pill.className='pill '+(isRenewDay?'pill-renew':hasOverride?'pill-custom':weekend?'pill-weekend':'pill-work');
+  document.getElementById('limitVal').textContent='₹'+limit.toLocaleString('en-IN');
+  const entries=todayEntries();
+  const spent=entries.reduce((s,e)=>s+e.amt,0);
+  const rem=limit-spent;
+  const bal=getBalance();
+  const pct=Math.min(100,Math.round((spent/limit)*100));
+  const spentEl=document.getElementById('spentToday');
+  spentEl.textContent='₹'+Math.round(spent).toLocaleString('en-IN');
+  spentEl.className='met-val'+(spent>limit?' danger':spent>limit*0.8?' warn':' ok');
+  const remEl=document.getElementById('remToday');
+  remEl.textContent=(rem>=0?'₹'+Math.round(rem).toLocaleString('en-IN'):'-₹'+Math.round(Math.abs(rem)).toLocaleString('en-IN'));
+  remEl.className='met-val'+(rem<0?' danger':rem<limit*0.2?' warn':' ok');
+  const balEl=document.getElementById('totalBal');
+  balEl.textContent='₹'+Math.round(bal).toLocaleString('en-IN');
+  balEl.className='met-val'+(bal<200?' danger':bal<500?' warn':' ok');
+  const bar=document.getElementById('barFill');
+  bar.style.width=pct+'%';
+  bar.style.background=pct>=100?'#E24B4A':pct>=80?'#EF9F27':'#1D9E75';
+  const logWrap=document.getElementById('logWrap');
+  const logList=document.getElementById('logList');
+  if(entries.length>0){
+    logWrap.style.display='block';
+    logList.innerHTML=entries.map(e=>`<div class="log-item">${catTag(e.cat)}<span class="log-note">${e.note}</span><span style="display:flex;align-items:center;gap:6px"><span class="log-amt">₹${e.amt.toLocaleString('en-IN')}</span><button class="del-btn" onclick="delEntry(${e.id})">✕</button></span></div>`).join('');
+  } else {logWrap.style.display='none';}
+}
+ 
+function renderCalendar(){
+  const y=calViewDate.getFullYear(),m=calViewDate.getMonth();
+  const now=new Date();
+  document.getElementById('calTitle').textContent=MONTHS[m]+' '+y;
+  document.getElementById('calStatsTitle').textContent=MONTHS[m]+' summary';
+  const firstDay=new Date(y,m,1).getDay();
+  const daysInMonth=new Date(y,m+1,0).getDate();
+  const todayD=now.getDate(),todayM=now.getMonth(),todayY=now.getFullYear();
+  let html='';
+  DAYS.forEach(d=>{html+=`<div class="cal-head">${d}</div>`;});
+  for(let i=0;i<firstDay;i++) html+=`<div class="cal-day empty"></div>`;
+  for(let d=1;d<=daysInMonth;d++){
+    const date=new Date(y,m,d);
+    const k=dateKey(date);
+    const entries=(store.entries&&store.entries[k])||[];
+    const spent=entries.reduce((s,e)=>s+e.amt,0);
+    const lim=getDayLimit(date);
+    const isToday=d===todayD&&m===todayM&&y===todayY;
+    const isSel=selectedCalDay&&selectedCalDay===k;
+    let cls='cal-day';
+    if(isToday) cls+=' today';
+    else if(entries.length>0){cls+=spent>lim?' over-limit':' under-limit';}
+    if(isSel) cls+=' selected';
+    html+=`<div class="${cls}" onclick="onCalDayClick('${k}')">${d}</div>`;
+  }
+  document.getElementById('miniCal').innerHTML=html;
+  let totalSpent=0,daysRecorded=0,daysOver=0;
+  Object.entries(store.entries||{}).forEach(([k,entries])=>{
+    const d=new Date(k);
+    if(d.getFullYear()===y&&d.getMonth()===m&&entries.length>0){
+      const s=entries.reduce((acc,e)=>acc+e.amt,0);
+      totalSpent+=s;daysRecorded++;
+      if(s>getDayLimit(d)) daysOver++;
+    }
+  });
+  document.getElementById('statSpent').textContent='₹'+Math.round(totalSpent).toLocaleString('en-IN');
+  document.getElementById('statDays').textContent=daysRecorded;
+  document.getElementById('statOver').textContent=daysOver;
+  document.getElementById('statAvg').textContent=daysRecorded>0?'₹'+Math.round(totalSpent/daysRecorded).toLocaleString('en-IN'):'—';
+}
+ 
+function onCalDayClick(k){
+  if(selectedCalDay===k){selectedCalDay=null;document.getElementById('dayDetail').style.display='none';}
+  else{selectedCalDay=k;showDayDetail(k);}
+  renderCalendar();
+}
+ 
+function showDayDetail(k){
+  const entries=(store.entries&&store.entries[k])||[];
+  const detail=document.getElementById('dayDetail');
+  if(entries.length===0){
+    detail.innerHTML=`<div class="day-detail"><div style="font-weight:500;margin-bottom:4px">${k}</div><div style="color:var(--color-text-secondary);font-size:12px">No entries</div></div>`;
+    detail.style.display='block';return;
+  }
+  const spent=entries.reduce((s,e)=>s+e.amt,0);
+  detail.innerHTML=`<div class="day-detail"><div style="display:flex;justify-content:space-between;font-weight:500;margin-bottom:6px"><span>${k}</span><span>₹${Math.round(spent).toLocaleString('en-IN')}</span></div>${entries.map(e=>`<div class="log-item">${catTag(e.cat)}<span class="log-note">${e.note}</span><span style="display:flex;align-items:center;gap:6px"><span class="log-amt">₹${e.amt.toLocaleString('en-IN')}</span><button class="del-btn" onclick="delCalEntry('${k}',${e.id})">✕</button></span></div>`).join('')}</div>`;
+  detail.style.display='block';
+}
+ 
+function renderHistory(){
+  const monthMap={};
+  Object.entries(store.entries||{}).forEach(([k,entries])=>{
+    const d=new Date(k);
+    const mk=d.getFullYear()+'-'+(d.getMonth()+1);
+    const label=MONTHS_SHORT[d.getMonth()]+' '+d.getFullYear();
+    if(!monthMap[mk]) monthMap[mk]={label,total:0,days:0,over:0};
+    if(entries.length>0){
+      const s=entries.reduce((acc,e)=>acc+e.amt,0);
+      monthMap[mk].total+=s;monthMap[mk].days++;
+      if(s>getDayLimit(d)) monthMap[mk].over++;
+    }
+  });
+  const keys=Object.keys(monthMap).sort().reverse();
+  const list=document.getElementById('histList');
+  if(keys.length===0){list.innerHTML='<div class="empty-state">No history yet</div>';return;}
+  list.innerHTML=keys.map(k=>`<div class="hist-item"><div><div class="hist-month">${monthMap[k].label}</div><div class="hist-meta">${monthMap[k].days} day${monthMap[k].days!==1?'s':''} · ${monthMap[k].over} over limit</div></div><div style="font-weight:500;color:var(--color-text-primary)">₹${Math.round(monthMap[k].total).toLocaleString('en-IN')}</div></div>`).join('');
+}
+ 
+function renderAll(){
+  renderAlerts();
+  renderToday();
+  renderStreak();
+  if(currentTab==='calendar') renderCalendar();
+  if(currentTab==='history') renderHistory();
+  if(currentTab==='settings') renderSettingsValues();
+  if(currentTab==='insights') renderInsights();
+}
+ 
+document.getElementById('amtInput').addEventListener('keydown',e=>{if(e.key==='Enter')addSpend();});
+document.getElementById('noteInput').addEventListener('keydown',e=>{if(e.key==='Enter')addSpend();});
+renderAll();
+</script>
+</body>
+</html>
